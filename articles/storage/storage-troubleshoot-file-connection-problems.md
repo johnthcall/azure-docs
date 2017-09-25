@@ -1,4 +1,4 @@
-﻿---
+---
 title: Troubleshooting Azure File storage issues | Microsoft Docs
 description: Troubleshooting Azure File storage issues
 services: storage
@@ -42,6 +42,9 @@ This article lists common problems that are related to Microsoft Azure File stor
 * [Mount error 115 when attempting to mount Azure Files on the Linux VM](#error15)
 * [Linux VM experiencing random delays in commands like "ls"](#delayproblem)
 
+**Accessing from other applications**
+* [Can I reference the azure file share for my application through a webjob?](#webjobs)
+
 <a id="quotaerror"></a>
 
 ## Quota error when trying to open a file
@@ -72,7 +75,9 @@ Reduce the number of concurrent open handles by closing some handles,  and then 
 ## Slow performance when accessing File storage from Windows or Linux
 * If you don’t have a specific minimum I/O size requirement, we recommend that you use 1 MB as the I/O size for optimal performance.
 * If you know the final size of a file that you are extending with writes, and your software doesn’t have compatibility issues when the not yet written tail on the file containing zeros, then set the file size in advance instead of every write being an extending write.
-
+* Use the right copy method:
+      * Use AZCopy for any transfer between two file shares. See [Transfer data with the AzCopy Command-Line Utility](https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy#file-copy) for more details.
+      * Use Robocopy between a file share an on-premises computer. Please see [Multi-threaded robocopy for faster copies](https://blogs.msdn.microsoft.com/granth/2009/12/07/multi-threaded-robocopy-for-faster-copies/) for more details.
 <a id="windowsslow"></a>
 
 ## Slow performance when accessing the File storage from Windows 8.1 or Windows Server 2012 R2
@@ -100,7 +105,7 @@ Never create or open a file for cached I/O that is requesting write access but n
 
 <a id="error53"></a>
 
-## "Error 53" when you try to mount or unmount an Azure File Share
+## "Error 53" or "Error 67" when you try to mount or unmount an Azure File Share
 This problem can be caused by following conditions:
 
 ### Cause 1
@@ -110,7 +115,7 @@ This problem can be caused by following conditions:
 Connect from a client that meets the requirements of Windows 8, Windows Server 2012 or later versions, or that connect from a virtual machine that is on the same data center as the Azure Storage account that is used for the Azure File share.
 
 ### Cause 2
-"System Error 53" when you mount an Azure file share can occur if Port 445 outbound communication to Azure Files data center is blocked. Click [here](http://social.technet.microsoft.com/wiki/contents/articles/32346.azure-summary-of-isps-that-allow-disallow-access-from-port-445.aspx) to see the summary of ISPs that allow or disallow access from port 445.
+"System Error 53" or "System Error 67" when you mount an Azure file share can occur if Port 445 outbound communication to Azure Files data center is blocked. Click [here](http://social.technet.microsoft.com/wiki/contents/articles/32346.azure-summary-of-isps-that-allow-disallow-access-from-port-445.aspx) to see the summary of ISPs that allow or disallow access from port 445.
 
 Comcast and some IT organizations block this port. To understand whether this is the reason behind the "System Error 53" message, you can use Portqry to query the TCP:445 endpoint. If the TCP:445 endpoint is displayed as filtered, the TCP port is blocked. Here is an example query:
 
@@ -232,8 +237,13 @@ Check the **serverino** in your "/etc/fstab" entry:
 //azureuser.file.core.windows.net/wms/comer on /home/sampledir type cifs (rw,nodev,relatime,vers=2.1,sec=ntlmssp,cache=strict,username=xxx,domain=X,
 file_mode=0755,dir_mode=0755,serverino,rsize=65536,wsize=65536,actimeo=1)
 
-If the **serverino** option is not present, unmount and mount Azure Files again by having the **serverino** option selected.
+If the **serverino** option is not present, unmount and mount Azure Files again by having the **serverino** option selected.+
 
+<a id="webjobs"></a> 
+
+## Accessing from other applications
+### Can I reference the azure file share for my application through a webjob?
+Mounting SMB shares in appservice sandbox isn’t possible. As a workaround, you can map the Azure file share as a mapped drive and allow the application to access it as a drive letter.
 ## Learn more
 * [Get started with Azure File storage on Windows](storage-dotnet-how-to-use-files.md)
 * [Get started with Azure File storage on Linux](storage-how-to-use-files-linux.md)

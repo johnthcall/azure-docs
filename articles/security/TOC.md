@@ -9,6 +9,7 @@
 ### [Data security and encryption best practices](azure-security-data-encryption-best-practices.md)
 ### [Storage security guide](../storage/storage-security-guide.md?toc=%2fazure%2fsecurity%2ftoc.json)
 ## [Compute security](security-virtual-machines-overview.md)
+### [Best practices for IaaS workloads ](azure-security-iaas.md)
 ### [Microsoft Antimalware](azure-security-antimalware.md)
 ### [Disk encryption](azure-security-disk-encryption.md)
 ### [Encrypt Azure VM](../security-center/security-center-disk-encryption.md?toc=%2fazure%2fsecurity%2ftoc.json)
@@ -22,8 +23,11 @@
 ## [Identity management](security-identity-management-overview.md)
 ### [Identity management security best practices](azure-security-identity-management-best-practices.md)
 ## PaaS services
-### [IoT security best practices](azure-security-iot-best-practices.md)
+### [Securing PaaS deployments](security-paas-deployments.md)
+#### [Securing PaaS applications using SQL](security-paas-applications-using-sql.md)
+#### [Securing PaaS applications using App Services](security-paas-applications-using-app-services.md)
 ### [IoT security overview](security-internet-of-things-overview.md)
+### [IoT security best practices](azure-security-iot-best-practices.md)
 ## Vertical industries
 ### [Designing secure health solutions](security-health-care-solution.md)
 ## [Security architecture](azure-security-architecture-overview.md)
@@ -32,12 +36,10 @@
 ### [Security best practices and patterns](security-best-practices-and-patterns.md)
 ### [Architecting resilient applications](../resiliency/resiliency-disaster-recovery-high-availability-azure-applications.md?toc=%2fazure%2fsecurity%2ftoc.json)
 
-# Reference
+# Related
 ## [Trust Center](security-microsoft-trust-center.md)
 ## [Microsoft Security Response Center](azure-security-response-center.md)
 ## [Pen testing](azure-security-pen-testing.md)
-
-# Related
 ## [Security Center](../security-center/security-center-intro.md?toc=%2fazure%2fsecurity-center%2ftoc.json)
 ## [Key Vault](../key-vault/key-vault-whatis.md)
 ## [Log Analytics](../log-analytics/log-analytics-overview.md)
